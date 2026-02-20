@@ -21,9 +21,41 @@ class _StatsScreenState extends State<StatsScreen> {
         foregroundColor: Colors.white,
         elevation: 0,
       ),
-      body: const Center(
-        child: Text('Stats Dashboard Loading...'), //
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Weekly Hydration',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Your water intake over the last 7 days',
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+            const SizedBox(height: 30),
+
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Center(
+                  child: Text('📊 Bar Chart Will Load Here'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-    );
+    ); //
   }
 }
