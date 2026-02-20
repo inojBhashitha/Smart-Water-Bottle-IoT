@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "266741697209",
+    "project_id": "smart-water-bottle-iot",
+    "storage_bucket": "smart-water-bottle-iot.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266741697209:android:5bc50efff7f11b740ee968",
+        "android_client_info": {
+          "package_name": "com.example.smart_water_bottle_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6Km-RfwiBimztKLbT6Z_cGiyrIYWibpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
