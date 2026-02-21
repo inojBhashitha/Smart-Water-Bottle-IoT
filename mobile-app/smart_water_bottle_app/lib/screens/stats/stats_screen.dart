@@ -46,5 +46,13 @@ Widget statCard({required String title, required String value, required Color co
         Text(value, style: TextStyle(color: color, fontSize: 20, fontWeight: FontWeight.bold)),
       ],
     ),
+    Row(
+      children: [
+        Expanded(child: statCard(title: "Weekly Avg", value: "${average.toInt()} ml", color: const Color(0xFF2563EB))),
+        const SizedBox(width: 15),
+        Expanded(child: statCard(title: "Best Day", value: "${bestDay.toInt()} ml", color: Colors.greenAccent)),
+      ],
+    ),
+    const SizedBox(height: 40),
   );
 }
