@@ -10,6 +10,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   // Dummy lifetime stats (later from Firebase)
   int longestStreak = 7;
+  int totalDaysTracked = 32;
+  int lifetimeIntake = 54000;
 
   String get hydrationRank {
     if (longestStreak >= 10) return "Hydration Elite 💎";
@@ -73,6 +75,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           style: const TextStyle(
                               color: Colors.white54),
                         ),
+                        const SizedBox(height: 30),
+
+                        // 📊 LIFETIME STATS
+                        const Text(
+                          "Lifetime Stats",
+                          style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500),
+                        ),
+
+                        const SizedBox(height: 15),
+
+                        Row(
+                          children: [
+                            Expanded(
+                                child: statCard(
+                                    "Days Tracked",
+                                    totalDaysTracked.toString())),
+                            const SizedBox(width: 12),
+                            Expanded(
+                                child: statCard(
+                                    "Longest Streak",
+                                    "$longestStreak Days")),
+                          ],
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        statCard("Lifetime Intake",
+                            "$lifetimeIntake ml"),
                       ],
                     )
                   ],
@@ -82,6 +115,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+  Widget statCard(String title, String value) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1E293B),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          Text(title,
+              style:
+              const TextStyle(color: Colors.white54)),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+        ],
       ),
     );
   }
