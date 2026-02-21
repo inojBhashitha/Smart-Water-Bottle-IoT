@@ -23,6 +23,7 @@ class StatsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               const Text(
                 "Hydration Insights",
                 style: TextStyle(
@@ -31,9 +32,10 @@ class StatsScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               const SizedBox(height: 30),
 
-              // Stats Row
+              /// Stats Cards
               Row(
                 children: [
                   Expanded(
@@ -55,6 +57,86 @@ class StatsScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 40),
+
+              /// Bar Chart Title
+              const Text(
+                "Weekly Intake",
+                style: TextStyle(color: Colors.white70, fontSize: 16),
+              ),
+
+              const SizedBox(height: 20),
+
+              /// Bar Chart
+              SizedBox(
+                height: 260,
+                child: BarChart(
+                  BarChartData(
+                    borderData: FlBorderData(show: false),
+                    gridData: FlGridData(show: false),
+                    titlesData: FlTitlesData(show: false),
+                    barGroups: weeklyIntake.asMap().entries.map((entry) {
+                      return BarChartGroupData(
+                        x: entry.key,
+                        barRods: [
+                          BarChartRodData(
+                            toY: entry.value.toDouble(),
+                            width: 18,
+                            borderRadius: BorderRadius.circular(8),
+                            gradient: LinearGradient(
+                              colors: entry.value >= goal
+                                  ? [Colors.greenAccent, Colors.green]
+                                  : [const Color(0xFF38BDF8), const Color(0xFF2563EB)],
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 40),
+
+              /// Trend vs Goal Title
+              const Text(
+                "Trend vs Goal",
+                style: TextStyle(color: Colors.white70, fontSize: 16),
+              ),
+
+              const SizedBox(height: 20),
+
+              /// Line Chart
+              SizedBox(
+                height: 260,
+                child: LineChart(
+                  LineChartData(
+                    borderData: FlBorderData(show: false),
+                    gridData: FlGridData(show: false),
+                    titlesData: FlTitlesData(show: false),
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: weeklyIntake
+                            .asMap()
+                            .entries
+                            .map((e) => FlSpot(
+                          e.key.toDouble(),
+                          e.value.toDouble(), // FIXED
+                        ))
+                            .toList(),
+                        isCurved: true,
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFF38BDF8),
+                            Color(0xFF2563EB),
+                          ],
+                        ),
+                        barWidth: 3,
+                        dotData: FlDotData(show: false),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -63,7 +145,7 @@ class StatsScreen extends StatelessWidget {
   }
 }
 
-// Reusable Stat Card
+/// Reusable Stat Card
 Widget statCard({
   required String title,
   required String value,
@@ -88,27 +170,6 @@ Widget statCard({
             color: color,
             fontSize: 20,
             fontWeight: FontWeight.bold,
-          ),
-          const Text("Weekly Intake", style: TextStyle(color: Colors.white70, fontSize: 16)),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: 260,
-            child: BarChart(
-              BarChartData(
-                borderData: FlBorderData(show: false),
-                barGroups: weeklyIntake.asMap().entries.map((entry) => BarChartGroupData(
-                  x: entry.key,
-                  barRods: [
-                    BarChartRodData(
-                      toY: entry.value,
-                      width: 18,
-                      borderRadius: BorderRadius.circular(8),
-                      gradient: LinearGradient(colors: entry.value >= goal ? [Colors.greenAccent, Colors.green] : [const Color(0xFF38BDF8), const Color(0xFF2563EB)]),
-                    ),
-                  ],
-                )).toList(),
-              ),
-            ),
           ),
         ),
       ],
