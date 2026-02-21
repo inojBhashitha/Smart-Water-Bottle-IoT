@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -14,7 +15,7 @@ class _StatsScreenState extends State<StatsScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'Hydration Stats 📊',
+          'Hydration Stats',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.blueAccent,
@@ -28,11 +29,7 @@ class _StatsScreenState extends State<StatsScreen> {
           children: [
             const Text(
               'Weekly Hydration',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87),
             ),
             const SizedBox(height: 8),
             const Text(
@@ -42,20 +39,72 @@ class _StatsScreenState extends State<StatsScreen> {
             const SizedBox(height: 30),
 
             Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: const Center(
-                  child: Text('📊 Bar Chart Will Load Here'),
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceAround,
+                  maxY: 3000,
+                  barTouchData: BarTouchData(enabled: true),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          const style = TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey);
+                          switch (value.toInt()) {
+                            case 0: return SideTitleWidget(axisSide: meta.axisSide, child: const Text('Mon', style: style));
+                            case 1: return SideTitleWidget(axisSide: meta.axisSide, child: const Text('Tue', style: style));
+                            case 2: return SideTitleWidget(axisSide: meta.axisSide, child: const Text('Wed', style: style));
+                            case 3: return SideTitleWidget(axisSide: meta.axisSide, child: const Text('Thu', style: style));
+                            case 4: return SideTitleWidget(axisSide: meta.axisSide, child: const Text('Fri', style: style));
+                            case 5: return SideTitleWidget(axisSide: meta.axisSide, child: const Text('Sat', style: style));
+                            case 6: return SideTitleWidget(axisSide: meta.axisSide, child: const Text('Sun', style: style));
+                            default: return const Text('');
+                          }
+                        },
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 40,
+                        getTitlesWidget: (value, meta) => Text('${value.toInt()}ml', style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                      ),
+                    ),
+                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  ),
+                  gridData: const FlGridData(show: true, drawVerticalLine: false),
+                  borderData: FlBorderData(show: false),
+                  barGroups: [
+                    makeGroupData(0, 1500),
+                    makeGroupData(1, 2200),
+                    makeGroupData(2, 1800),
+                    makeGroupData(3, 2500),
+                    makeGroupData(4, 2000),
+                    makeGroupData(5, 2800),
+                    makeGroupData(6, 1200),
+                  ],
                 ),
               ),
             ),
           ],
         ),
       ),
-    ); //
+    );
+  }
+
+  BarChartGroupData makeGroupData(int x, double y) {
+    return BarChartGroupData(
+      x: x,
+      barRods: [
+        BarChartRodData(
+          toY: y,
+          color: Colors.blueAccent,
+          width: 18,
+          borderRadius: BorderRadius.circular(4),
+        ),
+      ],
+    );
   }
 }

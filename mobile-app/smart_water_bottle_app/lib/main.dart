@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
+import 'package:smart_water_bottle_app/screens/stats/stats_screen.dart';
+import 'screens/stats/stats_screen.dart';
 
 void main() {
   runApp(const SmartWaterBottleApp());
@@ -12,7 +14,7 @@ class SmartWaterBottleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+        home: const StatsScreen(),
     );
   }
 }
