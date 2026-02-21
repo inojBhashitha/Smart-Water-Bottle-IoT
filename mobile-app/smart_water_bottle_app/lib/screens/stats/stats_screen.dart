@@ -20,9 +20,14 @@ class StatsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
             ],
+              final List weeklyIntake = [1800, 2100, 1600, 2400, 2000, 2300, 1900];
+          const double goal = 2500;
+          double average = weeklyIntake.reduce((a, b) => a + b) / weeklyIntake.length;
+          double bestDay = weeklyIntake.reduce((a, b) => a > b ? a : b);
           ),
         ),
       ),
     );
+
   }
 }
