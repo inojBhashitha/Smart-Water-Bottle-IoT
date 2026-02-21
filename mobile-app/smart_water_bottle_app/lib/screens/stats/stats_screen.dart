@@ -24,6 +24,7 @@ class StatsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
+              // Title
               const Text(
                 "Hydration Insights",
                 style: TextStyle(
@@ -35,7 +36,7 @@ class StatsScreen extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              /// Stats Cards
+              // Stats Cards
               Row(
                 children: [
                   Expanded(
@@ -58,7 +59,7 @@ class StatsScreen extends StatelessWidget {
 
               const SizedBox(height: 40),
 
-              /// Bar Chart Title
+              // Bar Chart Title
               const Text(
                 "Weekly Intake",
                 style: TextStyle(color: Colors.white70, fontSize: 16),
@@ -66,7 +67,7 @@ class StatsScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              /// Bar Chart
+              // Bar Chart
               SizedBox(
                 height: 260,
                 child: BarChart(
@@ -97,7 +98,7 @@ class StatsScreen extends StatelessWidget {
 
               const SizedBox(height: 40),
 
-              /// Trend vs Goal Title
+              // Line Chart Title
               const Text(
                 "Trend vs Goal",
                 style: TextStyle(color: Colors.white70, fontSize: 16),
@@ -105,7 +106,7 @@ class StatsScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              /// Line Chart
+              // Line Chart with Goal Line
               SizedBox(
                 height: 260,
                 child: LineChart(
@@ -114,29 +115,44 @@ class StatsScreen extends StatelessWidget {
                     gridData: FlGridData(show: false),
                     titlesData: FlTitlesData(show: false),
                     lineBarsData: [
+                      // Weekly intake line
                       LineChartBarData(
                         spots: weeklyIntake
                             .asMap()
                             .entries
                             .map((e) => FlSpot(
                           e.key.toDouble(),
-                          e.value.toDouble(), // FIXED
+                          e.value.toDouble(),
                         ))
                             .toList(),
                         isCurved: true,
                         gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF38BDF8),
-                            Color(0xFF2563EB),
-                          ],
+                          colors: [Color(0xFF38BDF8), Color(0xFF2563EB)],
                         ),
                         barWidth: 3,
+                        dotData: FlDotData(show: false),
+                      ),
+
+                      // Goal dashed line
+                      LineChartBarData(
+                        spots: List.generate(
+                          weeklyIntake.length,
+                              (index) => FlSpot(index.toDouble(), goal),
+                        ),
+                        color: Colors.redAccent,
+                        dashArray: [6, 4],
+                        barWidth: 2,
                         dotData: FlDotData(show: false),
                       ),
                     ],
                   ),
                 ),
               ),
+
+              const SizedBox(height: 40),
+
+              // Hydration Score
+              hydrationScore(average, goal),
             ],
           ),
         ),
@@ -169,6 +185,42 @@ Widget statCard({
           style: TextStyle(
             color: color,
             fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/// Hydration Score Widget
+Widget hydrationScore(double avg, double goal) {
+  final double score = (avg / goal).clamp(0.0, 1.0);
+
+  return Container(
+    padding: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      color: const Color(0xFF1E293B),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Hydration Score",
+          style: TextStyle(color: Colors.white70),
+        ),
+        const SizedBox(height: 12),
+        LinearProgressIndicator(
+          value: score,
+          backgroundColor: Colors.white12,
+          color: Colors.greenAccent,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          "${(score * 100).toInt()}%",
+          style: const TextStyle(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
