@@ -12,6 +12,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int longestStreak = 7;
   int totalDaysTracked = 32;
   int lifetimeIntake = 54000;
+  double dailyGoal = 2500;
 
   String get hydrationRank {
     if (longestStreak >= 10) return "Hydration Elite 💎";
@@ -105,7 +106,76 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(height: 12),
 
                         statCard("Lifetime Intake",
-                            "$lifetimeIntake ml"),
+                            "$lifetimeIntake ml"
+                        ),
+                        const SizedBox(height: 30),
+
+                        // 🎯 DAILY GOAL
+                        const Text(
+                          "Daily Goal",
+                          style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500),
+                        ),
+
+                        const SizedBox(height: 15),
+
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1E293B),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                "${dailyGoal.toInt()} ml",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Slider(
+                                value: dailyGoal,
+                                min: 1000,
+                                max: 5000,
+                                divisions: 16,
+                                activeColor:
+                                const Color(0xFF2563EB),
+                                inactiveColor: Colors.white24,
+                                onChanged: (value) {
+                                  setState(() {
+                                    dailyGoal = value;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Later: Save to Firebase
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                        Text("Goal Updated")),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                  const Color(0xFF2563EB),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child:
+                                const Text("Save Goal"),
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     )
                   ],
