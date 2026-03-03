@@ -42,10 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 180,
                   child: CircularProgressIndicator(
                     value: progress,
-                    strokeWidth: 15,
-                    backgroundColor: Colors.blue[100],
-                    color: Colors.blueAccent,
-                    strokeCap: StrokeCap.round,
+                    strokeWidth: 12,
+                    backgroundColor: Colors.grey[300],
                   ),
                 ),
                 Column(
