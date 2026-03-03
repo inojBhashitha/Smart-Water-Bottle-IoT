@@ -29,6 +29,31 @@ class HistoryScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 25),
+
+              Expanded(
+                child: ListView.builder(
+                  itemCount: historyData.length,
+                  itemBuilder: (context, index) {
+                    final item = historyData[index];
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 18),
+                      padding: const EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1E293B),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        item["date"],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
