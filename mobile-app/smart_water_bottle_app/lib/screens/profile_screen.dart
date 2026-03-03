@@ -8,14 +8,18 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  // Dummy lifetime stats (later from Firebase)
+  int longestStreak = 7;
+  int totalDaysTracked = 32;
+  int lifetimeIntake = 54000;
   double dailyGoal = 2500;
+
+  // New user attributes state
+  int userAge = 25;
+  int userWeight = 70; // in kg
+
   bool notificationsEnabled = true;
   bool darkMode = true;
-
-  // Dummy lifetime stats (later from Firebase)
-  int totalDaysTracked = 32;
-  int longestStreak = 7;
-  int lifetimeIntake = 54000;
 
   String get hydrationRank {
     if (longestStreak >= 10) return "Hydration Elite 💎";
@@ -163,7 +167,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        // Later: Save to Firebase
                         ScaffoldMessenger.of(context)
                             .showSnackBar(
                           const SnackBar(
@@ -182,6 +185,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child:
                       const Text("Save Goal"),
                     )
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              // 🧍 USER ATTRIBUTES (New Section)
+              const Text(
+                "Personal Attributes",
+                style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500),
+              ),
+
+              const SizedBox(height: 15),
+
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E293B),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        const Text("Age",
+                            style: TextStyle(color: Colors.white54)),
+                        const SizedBox(height: 5),
+                        Text("$userAge yrs",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    Container(
+                        height: 40,
+                        width: 1,
+                        color: Colors.white24), // Divider
+                    Column(
+                      children: [
+                        const Text("Weight",
+                            style: TextStyle(color: Colors.white54)),
+                        const SizedBox(height: 5),
+                        Text("$userWeight kg",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -242,6 +299,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     darkMode = value;
                   });
                 },
+              ),
+
+              const SizedBox(height: 40),
+
+              // 🚨 DANGER ZONE
+              const Text(
+                "Danger Zone",
+                style: TextStyle(
+                    color: Colors.redAccent,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+
+              const SizedBox(height: 15),
+
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.circular(25),
+                  ),
+                ),
+                child:
+                const Text("Reset Daily Intake"),
+              ),
+
+              const SizedBox(height: 15),
+
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                  const Color(0xFF334155),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.circular(25),
+                  ),
+                ),
+                child: const Text("Logout"),
               ),
 
             ],
