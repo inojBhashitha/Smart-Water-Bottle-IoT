@@ -12,9 +12,14 @@ class SmartWaterBottleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-        home: const StatsScreen(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFFF4F7FC),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        useMaterial3: true,
+      ),
+      home: const StatsScreen(),
     );
   }
 }
