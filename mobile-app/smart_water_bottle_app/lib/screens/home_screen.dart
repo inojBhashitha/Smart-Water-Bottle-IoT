@@ -29,6 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _resetWater() {
+    setState(() {
+      intake = 0;
+    });
+  }
+
   void _showGoalReachedDialog() {
     showDialog(
       context: context,
@@ -62,8 +68,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
-        title: const Text("Hydration Coach"),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: const Text(
+          "Hydration Coach",
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: _resetWater,
+            icon: const Icon(Icons.refresh_rounded, color: Colors.blueAccent),
+            tooltip: 'Reset Intake',
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
