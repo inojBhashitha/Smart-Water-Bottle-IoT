@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  double intake = 1200;
+  double goal = 2500;
+
+  void _addWater() {
+    setState(() {
+      if (intake < goal) intake += 250;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double intake = 1200;
-    double goal = 2500;
     double progress = intake / goal;
 
     return Scaffold(
@@ -31,9 +43,11 @@ class HomeScreen extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: progress,
                     strokeWidth: 12,
+                    backgroundColor: Colors.grey[300],
                   ),
                 ),
                 Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       "${intake.toInt()} ml",
@@ -57,6 +71,10 @@ class HomeScreen extends StatelessWidget {
             infoCard("Daily Streak", "3 Days 🔥"),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addWater,
+        child: const Icon(Icons.add_rounded),
       ),
     );
   }
