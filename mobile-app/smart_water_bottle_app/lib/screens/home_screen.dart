@@ -13,8 +13,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _addWater() {
     setState(() {
-      if (intake < goal) intake += 250;
+      if (intake < goal) {
+        intake += 250;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Amazing! Added 250ml of water 💧"),
+            duration: Duration(seconds: 2),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        if (intake >= goal) {
+          _showGoalReachedDialog();
+        }
+      }
     });
+  }
+
+  void _showGoalReachedDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Goal Reached! 🏆", textAlign: TextAlign.center),
+        content: const Text(
+          "Congratulations! You have successfully reached your hydration goal for today.",
+          textAlign: TextAlign.center,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        actions: [
+          Center(
+            child: ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                shape: const StadiumBorder(),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              ),
+              child: const Text("Awesome!"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -64,22 +102,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 40),
 
-            infoCard("Water Temperature", "28°C"),
+            infoCard("Water Temperature", "28°C", Icons.thermostat_outlined, Colors.orange),
             const SizedBox(height: 15),
-            infoCard("Water Quality (TDS)", "Good"),
+            infoCard("Water Quality (TDS)", "Good", Icons.water_drop_outlined, Colors.blue),
             const SizedBox(height: 15),
-            infoCard("Daily Streak", "3 Days 🔥"),
+            infoCard("Daily Streak", "3 Days 🔥", Icons.local_fire_department_outlined, Colors.redAccent),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _addWater,
-        child: const Icon(Icons.add_rounded),
+        icon: const Icon(Icons.add_rounded),
+        label: const Text("Add Water"),
+        elevation: 4,
       ),
     );
   }
 
-  Widget infoCard(String title, String value) {
+  Widget infoCard(String title, String value, IconData icon, Color iconColor) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -95,12 +135,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: iconColor.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: iconColor),
+          ),
+          const SizedBox(width: 15),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+          const Spacer(),
           Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ],
       ),
