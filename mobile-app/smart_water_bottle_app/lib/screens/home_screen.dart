@@ -83,9 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
           children: [
             const SizedBox(height: 20),
 
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
             infoCard("Daily Streak", "3 Days 🔥", Icons.local_fire_department_outlined, Colors.redAccent),
           ],
         ),
-      ),
+      )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _addWater,
         icon: const Icon(Icons.add_rounded),
